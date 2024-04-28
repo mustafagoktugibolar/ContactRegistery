@@ -13,6 +13,8 @@ public class User {
     private int address_id;
     private List<ContactList> contactList;
 
+    public static User currentUser;
+
     public User() {
     }
 

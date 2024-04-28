@@ -1,8 +1,11 @@
 package gui;
 
 import Config.Config;
+import controller.LoginController;
 import database.DBConnection;
 import helper.Helper;
+import models.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -132,7 +135,17 @@ public class LoginPage extends JFrame {
         loginButton.setBounds(675, 388, 135, 40);
         loginButton.addActionListener(e -> {
             // Login process
-            System.out.println("login button clicked");
+            if(Helper.isFieldEmpty(username, password)){
+                Helper.showMessage("fill");
+            }else if(!Helper.isValidEmail(username)){
+                Helper.showMessage("wrong email", "Please enter a valid email");
+            }else {
+                if(LoginController.login(username.getText(), new String(password.getPassword()))){
+
+                    new ContactsPage();
+                    this.dispose();
+                }
+            }
         });
         add(loginButton);
 
