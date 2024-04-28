@@ -1,8 +1,8 @@
 package gui;
 
+import Config.Config;
+import database.DBConnection;
 import helper.Helper;
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -20,12 +20,13 @@ public class LoginPage extends JFrame {
     private JLabel imageMessage;
     private JLabel usernameLabel;
     private JLabel passwordLabel;
+    private JButton showPasswordButton;
 
 
     public LoginPage() {
         // set frame settings
         super("Welcome!");
-        setSize(1000, 660);
+        setSize(Config.appWidth, Config.appHeight);
         setLocation(Helper.getScreenCenter("x", getSize()), Helper.getScreenCenter("y", getSize()));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -34,7 +35,7 @@ public class LoginPage extends JFrame {
         setVisible(true);
     }
     private void initComponents() {
-        // welcome image
+        // welcome to image
         welcomeImage = new JLabel(Helper.loadImageIcon("src/main/images/login-book.png"));
         welcomeImage.setBounds(90,135, 350, 330);
         add(welcomeImage);
@@ -67,12 +68,11 @@ public class LoginPage extends JFrame {
         usernameLabel.setForeground(Color.LIGHT_GRAY);
         add(usernameLabel);
 
-        // username textfield
+        // username text field
         username = new JTextField();
-        username.setEditable(false);
         username.setBackground(Color.WHITE);
-        username.setForeground(Color.BLACK);
-        username.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        username.setForeground(Color.DARK_GRAY);
+        username.setFont(new Font("Tahoma", Font.PLAIN, 19));
         username.setBounds(595, 240, 300, 30);
         add(username);
 
@@ -83,14 +83,30 @@ public class LoginPage extends JFrame {
         passwordLabel.setForeground(Color.LIGHT_GRAY);
         add(passwordLabel);
 
-        // password textfield
+        // password text field
         password = new JPasswordField();
-        password.setEchoChar('*');
         password.setBackground(Color.WHITE);
         password.setForeground(Color.BLACK);
-        password.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        password.setBounds(595, 310, 300, 30);
+        password.setFont(new Font("Tahoma", Font.PLAIN, 19));
+        password.setBounds(595, 310, 275, 30);
         add(password);
+
+        // show password button
+        showPasswordButton = new JButton(Helper.loadImageIcon("src/main/images/visibility.png"));
+        showPasswordButton.setBounds(869, 311, 28, 28);
+        showPasswordButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        showPasswordButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                password.setEchoChar((char) 0);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                password.setEchoChar('\u2022');
+            }
+        });
+        add(showPasswordButton);
 
         // forgot password
         forgotPassword = new JLabel("Forgot Password ?");
@@ -130,9 +146,9 @@ public class LoginPage extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println("signup button clicked");
+                new SignupPage();
             }
         });
         add(signup);
-
     }
 }

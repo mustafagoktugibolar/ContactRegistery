@@ -19,6 +19,7 @@ public class DBConnection {
     }
     public static Connection getInstance(){
         DBConnection db = new DBConnection();
+        System.out.println("Connected to database!");
         return  db.connectDB();
     }
 }
