@@ -1,8 +1,5 @@
 package models;
 
-import interfaces.IUser;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -16,6 +13,8 @@ public class User {
     private int address_id;
     private List<ContactList> contactList;
 
+    public User() {
+    }
 
     public int getUser_id() {
         return user_id;

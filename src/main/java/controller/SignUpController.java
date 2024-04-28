@@ -1,5 +1,6 @@
 package controller;
 
+import Config.Config;
 import database.DBConnection;
 import models.Address;
 import models.User;
@@ -11,9 +12,8 @@ public class SignUpController {
 
     // saving address
     public static int saveAddressToDatabase(Address address) {
-        String query = "INSERT INTO addresses (country, city, postal_code) VALUES (?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(Config.saveAddressQuery, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, address.getCountry());
             preparedStatement.setString(2, address.getCity());
             preparedStatement.setString(3, address.getPostalCode());
@@ -26,7 +26,7 @@ public class SignUpController {
 
             try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt(1); // Otomatik artan sütunun indeksi 1'den başlar
+                    return resultSet.getInt(1); // auto generated id starts at column 1
                 } else {
                     throw new SQLException("Failed to get ID of inserted address.");
                 }
@@ -40,10 +40,8 @@ public class SignUpController {
 
     // saving user
     public static boolean saveUserToDatabase(User user) {
-        String query = "INSERT INTO users (username, password, address_id, firstname, lastname, phonenumber, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         try{
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(Config.saveUserQuery);
             preparedStatement.setString(1, user.getUserName());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setInt(3, (int) user.getAddress_id());
