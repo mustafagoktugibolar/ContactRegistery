@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 src/main/java/Config/
 src/main/images/
+production
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

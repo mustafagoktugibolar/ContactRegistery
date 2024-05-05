@@ -1,9 +1,8 @@
 package controller;
 
 import Config.Config;
+import data.UserData;
 import database.DBConnection;
-import models.User;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,14 +19,14 @@ public class LoginController {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if(resultSet.next()) {
-                    User user = User.currentUser = new User();
-                    user.setEmail(resultSet.getString("email"));
-                    user.setPassword(resultSet.getString("password"));
-                    user.setFirstName(resultSet.getString("firstName"));
-                    user.setLastName(resultSet.getString("lastName"));
-                    user.setPhone(null);
-                    user.setUserName(resultSet.getString("username"));
-                    user.setAddress_id(resultSet.getInt("address_id"));
+                    UserData userData = UserData.getInstance();
+                    userData.setEmail(resultSet.getString("email"));
+                    userData.setPassword(resultSet.getString("password"));
+                    userData.setFirstName(resultSet.getString("firstName"));
+                    userData.setLastName(resultSet.getString("lastName"));
+                    userData.setPhone(resultSet.getString("phonenumber"));
+                    userData.setUserName(resultSet.getString("username"));
+                    userData.setAddress_id(resultSet.getInt("address_id"));
                     return true; // if user logged in  successfully
                 }
                 else {

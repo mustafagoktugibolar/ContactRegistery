@@ -3,13 +3,16 @@ package gui;
 import controller.SignUpController;
 import helper.Helper;
 import models.Address;
+import models.ProfilePicture;
 import models.User;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 
 public class SignupPage extends JFrame {
-    private JLabel signupLabel;
     private JLabel usernameLabel;
     private JTextField usernameTextField;
     private JLabel passwordLabel;
@@ -29,11 +32,21 @@ public class SignupPage extends JFrame {
     private JLabel cityLabel;
     private JTextField postalCodeTextField;
     private JLabel postalCodeLabel;
+    private JLabel pictureLabel;
+    private JLabel pictureSelector;
+    private JTextField birthDateTextField;
+    private JLabel birthDateLabel;
+    private JLabel phoneNumberLabel;
+    private JTextField phoneNumberTextField;
+    private JComboBox<String> genderComboBox;
+    private JLabel genderLabel;
+    User user;;
+    private String picturePath;
 
     public SignupPage() {
         super("Sign Up");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(420, 550);
+        setSize(620, 515);
         setLocation(Helper.getScreenCenter("x", getSize()), Helper.getScreenCenter("y", getSize()));
         setResizable(false);
         setLayout(null);
@@ -56,6 +69,39 @@ public class SignupPage extends JFrame {
         firstNameTextField.setBackground(Color.WHITE);
         firstNameTextField.setBounds(37 , 55, 168, 30);
         add(firstNameTextField);
+
+        // picture selector
+        pictureSelector = new JLabel(Helper.loadImageIcon("src/main/images/profile-logo.png"));
+        pictureSelector.setBounds(425,15, 150,150);
+        pictureSelector.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                picturePath = Helper.fileSelector(SignupPage.this);
+                pictureSelector.setIcon(Helper.fitImage(picturePath, pictureSelector));
+            }
+        });
+        add(pictureSelector);
+
+        pictureLabel = new JLabel("<HTML><div style=\"text-align: center;\">click icon</div><div>to select picture</div></HTML>");
+        pictureLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        pictureLabel.setForeground(Color.GRAY);
+        pictureLabel.setBounds(455 , 125, 200, 30);
+        add(pictureLabel);
+
+        // birthdate label
+        birthDateLabel = new JLabel("Birth Date");
+        birthDateLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        birthDateLabel.setForeground(Color.GRAY);
+        birthDateLabel.setBounds(397 , 180, 80, 10);
+        add(birthDateLabel);
+
+        // birthdate text field | replace  it PlaceHolderTextField
+        birthDateTextField = new JTextField();
+        birthDateTextField.setFont(new Font("Tahoma", Font.PLAIN, 19));
+        birthDateTextField.setForeground(Color.GRAY);
+        birthDateTextField.setBackground(Color.WHITE);
+        birthDateTextField.setBounds(393 , 195, 200, 30);
+        add(birthDateTextField);
 
         // last name label
         lastNameLabel = new JLabel("Last Name");
@@ -147,6 +193,35 @@ public class SignupPage extends JFrame {
         postalCodeTextField.setBounds(265 , 265, 112, 30);
         add(postalCodeTextField);
 
+        // phone number label
+        phoneNumberLabel = new JLabel("Phone Number");
+        phoneNumberLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        phoneNumberLabel.setForeground(Color.GRAY);
+        phoneNumberLabel.setBounds(397 , 249, 100, 15);
+        add(phoneNumberLabel);
+
+        // phone number text field
+        phoneNumberTextField = new JTextField();
+        phoneNumberTextField.setFont(new Font("Tahoma", Font.PLAIN, 19));
+        phoneNumberTextField.setForeground(Color.DARK_GRAY);
+        phoneNumberTextField.setBackground(Color.WHITE);
+        phoneNumberTextField.setBounds(393 , 265, 200, 30);
+        add(phoneNumberTextField);
+
+        // gender label
+        genderLabel = new JLabel("Gender");
+        genderLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        genderLabel.setForeground(Color.GRAY);
+        genderLabel.setBounds(397 , 315, 80, 15);
+        add(genderLabel);
+
+        // gender combo box
+        genderComboBox = new JComboBox<>(new String[]{"Male", "Female"});
+        genderComboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        genderComboBox.setForeground(Color.DARK_GRAY);
+        genderComboBox.setBackground(Color.WHITE);
+        genderComboBox.setBounds(393 , 333, 200, 30);
+        add(genderComboBox);
 
         // password label
         passwordLabel = new JLabel("Password");
@@ -182,7 +257,7 @@ public class SignupPage extends JFrame {
         registerButton = new JButton("Sign Up");
         registerButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
         registerButton.setForeground(Color.DARK_GRAY);
-        registerButton.setBounds(170 , 450, 80, 40);
+        registerButton.setBounds(393 , 400, 200, 30);
         registerButton.setBackground(Color.WHITE);
         registerButton.addActionListener(e -> {
             if (Helper.isFieldEmpty(firstNameTextField, lastNameTextField, usernameTextField, postalCodeTextField, countryTextField, cityTextField, passwordTextField, confirmPasswordTextField)) {
@@ -193,15 +268,23 @@ public class SignupPage extends JFrame {
                 Helper.showMessage("wrong postal code", "Please enter a valid postal code! It must contain 5 digits");
             } else if (!new String(passwordTextField.getPassword()).equals(new String(confirmPasswordTextField.getPassword()))) {
                 Helper.showMessage("wrong password", "Passwords do not match!");
-            } else {
+            }else if (!Helper.isValidPhoneNumber(phoneNumberTextField.getText())){
+                Helper.showMessage("wrong phone number", "Please enter a valid phone number");
+            } else if (Helper.isValidBirthDate(birthDateTextField.getText()) == null){
+                Helper.showMessage("wrong birth date", "Please enter a valid birth date");
+            }else {
                 // if all valid create user and start sign up
-                User user = new User();
+                user = new User();
                 user.setUserName(usernameTextField.getText());
                 user.setEmail(emailTextField.getText());
                 user.setPassword(new String(passwordTextField.getPassword()));
                 user.setFirstName(firstNameTextField.getText());
                 user.setLastName(lastNameTextField.getText());
-                user.setPhone(null);
+                user.setPhone(phoneNumberTextField.getText());
+                user.setGender(genderComboBox.getSelectedItem().toString());
+                user.setTeam_id(1);
+                user.setBirth_date(Helper.isValidBirthDate(birthDateTextField.getText()));
+
 
 
                 // store address at database
@@ -213,8 +296,21 @@ public class SignupPage extends JFrame {
                 // store address id after saving it
                 int address_id = SignUpController.saveAddressToDatabase(adress);
                 System.out.println(address_id);
+
                 // add address to user
                 user.setAddress_id(address_id);
+
+                // store profile picture to database
+                ProfilePicture profilePicture = new ProfilePicture();
+                profilePicture.setUsername(picturePath);
+                profilePicture.setProfile_photo(Helper.getByteArray(picturePath));
+
+                int photo_id = SignUpController.saveProfilePictureToDatabase(profilePicture);
+                System.out.println(photo_id);
+
+                //add photo to user
+                user.setPhoto_id(photo_id);
+
 
                 // store user to database
                 if(SignUpController.saveUserToDatabase(user)) {

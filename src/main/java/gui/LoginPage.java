@@ -2,10 +2,7 @@ package gui;
 
 import Config.Config;
 import controller.LoginController;
-import database.DBConnection;
 import helper.Helper;
-import models.User;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -39,27 +36,27 @@ public class LoginPage extends JFrame {
     }
     private void initComponents() {
         // welcome to image
-        welcomeImage = new JLabel(Helper.loadImageIcon("src/main/images/login-book.png"));
-        welcomeImage.setBounds(90,135, 350, 330);
+        welcomeImage = new JLabel(Helper.loadImageIcon("src/main/images/tournament-login.png"));
+        welcomeImage.setBounds(90,125, 350, 350);
         add(welcomeImage);
 
         // image message
-        imageMessage = new JLabel("Add your contacts to your lists!");
-        imageMessage.setBounds(180,475, 200, 30);
+        imageMessage = new JLabel("Arrange sport tournaments");
+        imageMessage.setBounds(177,480, 200, 30);
         imageMessage.setFont(new Font("Tahoma", Font.PLAIN, 14));
         imageMessage.setForeground(Color.GRAY);
         add(imageMessage);
 
         // app title
-        appTitle = new JLabel("Phone Book");
-        appTitle.setBounds(690, 65, 150, 30);
+        appTitle = new JLabel("Tournament Scheduler");
+        appTitle.setBounds(630, 65, 250, 30);
         appTitle.setFont(new Font("Tahoma", Font.ITALIC, 24));
         appTitle.setForeground(Color.darkGray);
         add(appTitle);
 
         // welcome message
-        welcomeMessage = new JLabel("Welcome to Phone Book");
-        welcomeMessage.setBounds(637, 110, 250, 90);
+        welcomeMessage = new JLabel("Welcome to Tournament Scheduler");
+        welcomeMessage.setBounds(585, 110, 320, 90);
         welcomeMessage.setFont(new Font("Tahoma", Font.PLAIN, 20));
         welcomeMessage.setForeground(Color.GRAY);
         add(welcomeMessage);
@@ -150,11 +147,11 @@ public class LoginPage extends JFrame {
         add(loginButton);
 
         // signup text
-        signup = new JLabel("<html>New to Phone book? <b><u><font color='gray'>Create Account</font></u></b></html>");
+        signup = new JLabel("<html>New to Tournament Scheduler? <b><u><font color='gray'>Create Account</font></u></b></html>");
         signup.setFont(new Font("Tahoma", Font.PLAIN, 12));
         signup.setForeground(Color.GRAY);
         signup.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        signup.setBounds(635, 510, 240, 30);
+        signup.setBounds(610, 510, 300, 30);
         signup.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

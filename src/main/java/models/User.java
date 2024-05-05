@@ -1,5 +1,6 @@
 package models;
 
+import java.sql.Date;
 import java.util.List;
 
 public class User {
@@ -7,13 +8,16 @@ public class User {
     private String userName;
     private String password;
     private String email;
-    private String phone;
+    private String phonenumber;
     private String firstName;
     private String lastName;
     private int address_id;
     private List<ContactList> contactList;
-
-    public static User currentUser;
+    private int team_id;
+    private Date birth_date;
+    private int photo_id;
+    private String gender;
+    // add height, weight, age, blood type, unique friend code, sign, social media
 
     public User() {
     }
@@ -24,6 +28,14 @@ public class User {
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getUserName() {
@@ -50,12 +62,12 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phonenumber;
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phonenumber = phone;
     }
 
     public int getAddress_id() {
@@ -88,5 +100,33 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phonenumber = phoneNumber;
+    }
+
+    public int getTeam_id() {
+        return team_id;
+    }
+
+    public void setTeam_id(int team_id) {
+        this.team_id = team_id;
+    }
+
+    public Date getBirth_date() {
+        return birth_date;
+    }
+
+    public void setBirth_date(Date birth_date) {
+        this.birth_date = birth_date;
+    }
+
+    public int getPhoto_id() {
+        return photo_id;
+    }
+
+    public void setPhoto_id(int photo_id) {
+        this.photo_id = photo_id;
     }
 }
