@@ -1,7 +1,6 @@
 package models;
 
 import java.sql.Date;
-import java.util.List;
 
 public class User {
     private int user_id;
@@ -12,8 +11,6 @@ public class User {
     private String firstName;
     private String lastName;
     private int address_id;
-    private List<ContactList> contactList;
-    private int team_id;
     private Date birth_date;
     private int photo_id;
     private String gender;
@@ -78,14 +75,6 @@ public class User {
         this.address_id = address_id;
     }
 
-    public List<ContactList> getContactList() {
-        return contactList;
-    }
-
-    public void setContactList(List<ContactList> contactList) {
-        this.contactList = contactList;
-    }
-
     public String getFirstName() {
         return firstName;
     }
@@ -104,14 +93,6 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phonenumber = phoneNumber;
-    }
-
-    public int getTeam_id() {
-        return team_id;
-    }
-
-    public void setTeam_id(int team_id) {
-        this.team_id = team_id;
     }
 
     public Date getBirth_date() {

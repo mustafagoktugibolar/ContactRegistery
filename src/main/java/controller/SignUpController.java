@@ -46,12 +46,9 @@ public class SignUpController {
     // save profile photo
     public static int saveProfilePictureToDatabase(ProfilePicture profilePicture) {
         try(PreparedStatement preparedStatement = connection.prepareStatement(Config.saveProfilePictureQuery, Statement.RETURN_GENERATED_KEYS)){
-            // Convert File path to input stream
-            File imageFile = new File(profilePicture.getUsername());
-            FileInputStream inputStream = new FileInputStream(imageFile);
-            System.out.println(inputStream.readAllBytes());
+
             //prepare statement
-            preparedStatement.setString(1, profilePicture.getUsername());
+            preparedStatement.setString(1, profilePicture.getPath());
             preparedStatement.setBytes(2, profilePicture.getProfile_photo());
             int rowsAffected = preparedStatement.executeUpdate();
 
@@ -65,11 +62,9 @@ public class SignUpController {
                     throw new SQLException("Failed to get ID of inserted profile picture.");
                 }
             }
-        }catch (SQLException | FileNotFoundException e){
+        }catch (SQLException  e){
             e.printStackTrace();
             return -1; // if there is an error
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -85,9 +80,8 @@ public class SignUpController {
             preparedStatement.setString(6, user.getPhoneNumber());
             preparedStatement.setString(7, user.getEmail());
             preparedStatement.setDate(8, user.getBirth_date());
-            preparedStatement.setInt(9, (int)user.getTeam_id());
-            preparedStatement.setInt(10, (int)user.getPhoto_id());
-            preparedStatement.setString(11, user.getGender());
+            preparedStatement.setInt(9, (int)user.getPhoto_id());
+            preparedStatement.setString(10, user.getGender());
 
             int rowsAffected = preparedStatement.executeUpdate();
 

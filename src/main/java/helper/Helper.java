@@ -77,11 +77,11 @@ public class Helper {
             Date sqlDate = new Date(utilDate.getTime());
 
             // Additional validation if needed, for example, checking if the person is not born in the future
-            Date currentDate = new Date(System.currentTimeMillis()); // Get current date
-            if (sqlDate.after(currentDate)) {
-                showMessage("Birthdate is in the future", "Try Again!");
-                return null; // Birthdate is in the future
-            }
+//            Date currentDate = new Date(System.currentTimeMillis()); // Get current date
+//            if (sqlDate.after(currentDate)) {
+//                showMessage("Birthdate is in the future", "Try Again!");
+//                return null; // Birthdate is in the future
+//            }
 
             return sqlDate; // Return valid date
         } catch (ParseException e) {
@@ -90,7 +90,7 @@ public class Helper {
         }
     }
 
-    // image path to file input stream
+    // image path to byte array
     public static byte[] getByteArray(String path){
         try {
             File file = new File(path);
@@ -107,33 +107,30 @@ public class Helper {
     }
 
     // byte array to image
-    public static Image writeByteArrayToImage(byte[] imageBytes){
-       try {
-           byte[] bytes = new byte[imageBytes.length];
-           for (int i = 0; i < imageBytes.length; i++) {
-               bytes[i] = imageBytes[i];
-           }
-           ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
-           BufferedImage bufferedImage = ImageIO.read(bis);
-           bis.close();
-
-           return bufferedImage;
-       }catch (Exception e){
-           throw new RuntimeException(e);
-       }
+    public static ImageIcon loadImage(byte[] imageData) {
+        try {
+            // Create ByteArrayInputStream from the byte array
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
+            // Read the image from the ByteArrayInputStream
+            Image image = ImageIO.read(bis);
+            // Close the ByteArrayInputStream
+            bis.close();
+            // Create ImageIcon from the Image
+            return new ImageIcon(image);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Return null if there's an error loading the image
+        }
     }
 
     // fit image to label size
-    public static ImageIcon fitImage(String path, JLabel label){
+    public static ImageIcon fitImage(String path, int width, int height){
         try {
             // Load the image from file
             BufferedImage originalImage = ImageIO.read(new File(path));
-            // Get the size of the label
-            int labelWidth = label.getWidth();
-            int labelHeight = label.getHeight();
 
             // Resize the image to fit the label
-            Image scaledImage = originalImage.getScaledInstance(labelWidth, labelHeight, Image.SCALE_SMOOTH);
+            Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 
             // Set the image to the label
             return new ImageIcon(scaledImage);
@@ -141,6 +138,27 @@ public class Helper {
             e.printStackTrace();
         }
         return new ImageIcon("src/main/images/profile-logo.png");
+    }
+
+    // fit image from byte array
+    public static ImageIcon fitImage(byte[] imageData, int width, int height){
+        try {
+            // Create ByteArrayInputStream from the byte array
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageData);
+            // Read the image from the ByteArrayInputStream
+            BufferedImage originalImage = ImageIO.read(bis);
+            // Close the ByteArrayInputStream
+            bis.close();
+
+            // Resize the image to fit the label
+            Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+            // Set the image to the label
+            return new ImageIcon(scaledImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ImageIcon("src/main/images/profile-logo.png");
+        }
     }
 
     // isValid phone number

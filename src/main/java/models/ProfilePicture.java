@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 
 public class ProfilePicture {
     private int photo_id;
-    private String username;
+    private String path;
     private byte[] profile_photo;
 
 
@@ -16,12 +16,12 @@ public class ProfilePicture {
         this.photo_id = photo_id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPath() {
+        return path;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPath(String username) {
+        this.path = username;
     }
 
     public byte[] getProfile_photo() {

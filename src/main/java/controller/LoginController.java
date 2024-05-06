@@ -27,6 +27,11 @@ public class LoginController {
                     userData.setPhone(resultSet.getString("phonenumber"));
                     userData.setUserName(resultSet.getString("username"));
                     userData.setAddress_id(resultSet.getInt("address_id"));
+                    userData.setGender(resultSet.getString("gender"));
+                    userData.setUser_id(resultSet.getInt("user_id"));
+                    userData.setPhoto_id(resultSet.getInt("photo_id"));
+                    // get data from photo_id, address_id and team_id
+                    fetchAdditionalData(userData);
                     return true; // if user logged in  successfully
                 }
                 else {
@@ -37,6 +42,42 @@ public class LoginController {
             e.printStackTrace();
             return false; // for any error return false
         }
+    }
+
+    private static void fetchAdditionalData(UserData userData) {
+        // profile picture
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(Config.fetchProfilePictureQuery);
+            preparedStatement.setInt(1, userData.getPhoto_id());
+
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                if(resultSet.next()) {
+                    userData.getProfilePicture().setPhoto_id(resultSet.getInt("photo_id"));
+                    userData.getProfilePicture().setPath(resultSet.getString("path"));
+                    userData.getProfilePicture().setProfile_photo(resultSet.getBytes("profile_photo"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        // address
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(Config.fetchAddressesQuery);
+            preparedStatement.setInt(1, userData.getAddress_id());
+
+            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+                if(resultSet.next()) {
+                    userData.getAdress().setAddress_id(resultSet.getInt("address_id"));
+                    userData.getAdress().setCountry(resultSet.getString("country"));
+                    userData.getAdress().setCity(resultSet.getString("city"));
+                    userData.getAdress().setPostalCode(resultSet.getString("postal_code"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

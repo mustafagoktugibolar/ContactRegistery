@@ -77,7 +77,7 @@ public class SignupPage extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 picturePath = Helper.fileSelector(SignupPage.this);
-                pictureSelector.setIcon(Helper.fitImage(picturePath, pictureSelector));
+                pictureSelector.setIcon(Helper.fitImage(picturePath, pictureSelector.getWidth(), pictureSelector.getHeight()));
             }
         });
         add(pictureSelector);
@@ -282,7 +282,6 @@ public class SignupPage extends JFrame {
                 user.setLastName(lastNameTextField.getText());
                 user.setPhone(phoneNumberTextField.getText());
                 user.setGender(genderComboBox.getSelectedItem().toString());
-                user.setTeam_id(1);
                 user.setBirth_date(Helper.isValidBirthDate(birthDateTextField.getText()));
 
 
@@ -302,7 +301,7 @@ public class SignupPage extends JFrame {
 
                 // store profile picture to database
                 ProfilePicture profilePicture = new ProfilePicture();
-                profilePicture.setUsername(picturePath);
+                profilePicture.setPath(picturePath);
                 profilePicture.setProfile_photo(Helper.getByteArray(picturePath));
 
                 int photo_id = SignUpController.saveProfilePictureToDatabase(profilePicture);

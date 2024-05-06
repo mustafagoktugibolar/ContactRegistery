@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="ContactRegistery:jar">
-    <output-path>$USER_HOME$/Desktop</output-path>
-    <root id="archive" name="ContactRegistery.jar">
-      <element id="module-output" name="ContactRegistery" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/postgresql/postgresql/42.7.3/postgresql-42.7.3.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>

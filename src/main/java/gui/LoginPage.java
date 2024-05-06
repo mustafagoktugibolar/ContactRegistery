@@ -139,7 +139,7 @@ public class LoginPage extends JFrame {
             }else {
                 if(LoginController.login(username.getText(), new String(password.getPassword()))){
 
-                    new ContactsPage();
+                    new TournamentPage();
                     this.dispose();
                 }
             }

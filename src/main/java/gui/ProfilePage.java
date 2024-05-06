@@ -24,8 +24,8 @@ public class ProfilePage extends JFrame {
 
     private void initComponents() {
         // profile picture
-        profileLogo = new JLabel(Helper.loadImageIcon("src/main/images/profile-logo.png"));
-        profileLogo.setBounds(50,30, 100,100);
+        profileLogo = new JLabel();
+        profileLogo.setBounds(50,30, 200,200);
         profileLogo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -33,6 +33,7 @@ public class ProfilePage extends JFrame {
                 String selectedPitcure = Helper.fileSelector(ProfilePage.this);
             }
         });
+        profileLogo.setIcon(Helper.fitImage(data.getProfilePicture().getProfile_photo(), profileLogo.getWidth(), profileLogo.getHeight()));
         add(profileLogo);
 
     }
