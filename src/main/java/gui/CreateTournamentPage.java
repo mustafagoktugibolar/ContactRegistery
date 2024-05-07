@@ -83,11 +83,11 @@ public class CreateTournamentPage extends JFrame {
 
         // team size combo box
         teamSizeComboBox = new JComboBox<>(new Integer[]{8, 16, 32});
-        teamSizeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-        teamSizeComboBox.setBackground(Color.white);
-        teamSizeComboBox.setForeground(Color.DARK_GRAY);
-        teamSizeComboBox.setBounds(100, 440, 200, 30);
-        add(teamSizeComboBox);
+            teamSizeComboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
+            teamSizeComboBox.setBackground(Color.white);
+            teamSizeComboBox.setForeground(Color.DARK_GRAY);
+            teamSizeComboBox.setBounds(100, 440, 200, 30);
+            add(teamSizeComboBox);
 
         // create button
         createTournamentButton = new JButton("Create Tournament");

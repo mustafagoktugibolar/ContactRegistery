@@ -3,7 +3,6 @@ package data;
 import database.DBConnection;
 import interfaces.IUser;
 import models.*;
-
 import java.sql.Connection;
 import java.util.HashMap;
 
@@ -13,7 +12,16 @@ public class UserData extends User implements IUser {
 
     public Address adress = new Address();
     public ProfilePicture profilePicture = new ProfilePicture();
+    //first data structure
     public HashMap<Integer, Tournament> tournaments = new HashMap<>();
+
+    public HashMap<Integer, Tournament> getTournaments() {
+        return tournaments;
+    }
+
+    public void setTournaments(HashMap<Integer, Tournament> tournaments) {
+        this.tournaments = tournaments;
+    }
 
     // database connection
     private static Connection connection = DBConnection.getInstance();

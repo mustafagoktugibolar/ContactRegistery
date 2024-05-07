@@ -110,4 +110,8 @@ public class User {
     public void setPhoto_id(int photo_id) {
         this.photo_id = photo_id;
     }
+
+    public String getFullName(){
+        return firstName + " " + lastName;
+    }
 }

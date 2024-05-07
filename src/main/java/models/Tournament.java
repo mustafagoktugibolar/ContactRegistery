@@ -8,8 +8,6 @@ public class Tournament {
     private Date tournament_start_date;
     private Date tournament_end_date;
     private String location;
-    private int home_team_id;
-    private int away_team_id;
     private int team_size;
 
 
@@ -61,19 +59,16 @@ public class Tournament {
         this.tournament_end_date = tournament_end_date;
     }
 
-    public int getHome_team_id() {
-        return home_team_id;
-    }
 
-    public void setHome_team_id(int home_team_id) {
-        this.home_team_id = home_team_id;
-    }
-
-    public int getAway_team_id() {
-        return away_team_id;
-    }
-
-    public void setAway_team_id(int away_team_id) {
-        this.away_team_id = away_team_id;
+    @Override
+    public String toString() {
+        return "Tournament{" +
+                "tournament_id=" + tournament_id +
+                ", tournament_name='" + tournament_name + '\'' +
+                ", tournament_start_date=" + tournament_start_date +
+                ", tournament_end_date=" + tournament_end_date +
+                ", location='" + location + '\'' +
+                ", team_size=" + team_size +
+                '}';
     }
 }

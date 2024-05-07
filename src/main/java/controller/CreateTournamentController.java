@@ -3,7 +3,6 @@ package controller;
 import Config.Config;
 import database.DBConnection;
 import models.Tournament;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
