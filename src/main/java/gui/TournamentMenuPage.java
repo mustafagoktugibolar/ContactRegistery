@@ -6,7 +6,7 @@ import data.UserData;
 import helper.Helper;
 import interfaces.ITournamentObserver;
 import jcomponents.CenteredTextRenderer;
-import models.TournamentTableModel;
+import models.TournamentsTableModel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,6 +34,7 @@ public class TournamentMenuPage extends JFrame implements ITournamentObserver {
         initComponents();
         setVisible(true);
         TournamentMenuPageController.addObserver(this);
+
     }
     private void initComponents() {
         // profile button
@@ -63,8 +64,8 @@ public class TournamentMenuPage extends JFrame implements ITournamentObserver {
         data.setTournaments(TournamentMenuPageController.getTournaments());
 
         // tournament table
-        TournamentTableModel tournamentTableModel = new TournamentTableModel(data.getTournaments());
-        tournamentTable = new JTable(tournamentTableModel);
+        TournamentsTableModel tournamentsTableModel = new TournamentsTableModel(data.getTournaments());
+        tournamentTable = new JTable(tournamentsTableModel);
         tournamentTable.setBounds(100,75,650,500);
 
         // align the cell's text to center
@@ -130,16 +131,16 @@ public class TournamentMenuPage extends JFrame implements ITournamentObserver {
                 JComboBox cb = (JComboBox) e.getSource();
                 switch ((String) cb.getSelectedItem()) {
                     case "Ascending Alphabetical":
-                        tournamentTableModel.sortAlphabetically();
+                        tournamentsTableModel.sortAlphabetically();
                         break;
                     case "Descending Alphabetical":
-                        tournamentTableModel.sortReverseAlphabetically();
+                        tournamentsTableModel.sortReverseAlphabetically();
                         break;
                     case "Ascending Date":
-                        tournamentTableModel.sortByStartDate();
+                        tournamentsTableModel.sortByStartDate();
                         break;
                     case "Descending Date":
-                        tournamentTableModel.sortReverseByStartDate();
+                        tournamentsTableModel.sortReverseByStartDate();
                         break;
                 }
             }
@@ -162,9 +163,9 @@ public class TournamentMenuPage extends JFrame implements ITournamentObserver {
         data.setTournaments(TournamentMenuPageController.getTournaments());
 
         // Update the existing table model with the new tournament data
-        TournamentTableModel tournamentTableModel = (TournamentTableModel) tournamentTable.getModel();
-        tournamentTableModel.setTournaments(data.getTournaments());
-        tournamentTableModel.fireTableDataChanged(); // Notify the table model about the data change
+        TournamentsTableModel tournamentsTableModel = (TournamentsTableModel) tournamentTable.getModel();
+        tournamentsTableModel.setTournaments(data.getTournaments());
+        tournamentsTableModel.fireTableDataChanged(); // Notify the table model about the data change
     }
 
 }

@@ -8,8 +8,17 @@ public class Tournament {
     private Date tournament_start_date;
     private Date tournament_end_date;
     private String location;
+    private Integer[] team_ids;
     private int team_size;
 
+
+    public Integer[] getTeam_ids() {
+        return team_ids;
+    }
+
+    public void setTeam_ids(Integer[] team_ids) {
+        this.team_ids = team_ids;
+    }
 
     public int getTeam_size() {
         return team_size;
@@ -17,6 +26,7 @@ public class Tournament {
 
     public void setTeam_size(int team_size) {
         this.team_size = team_size;
+        team_ids = new Integer[team_size];
     }
 
     public String getLocation() {

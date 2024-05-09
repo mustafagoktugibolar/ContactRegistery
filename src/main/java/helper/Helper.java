@@ -10,10 +10,12 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -235,5 +237,24 @@ public class Helper {
     // SHOW CUSTOM POP-UP MESSAGE
     public static void showMessage(String title, String message){
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static <T> ArrayList<T> convertToArrayList(T[] array) {
+        return new ArrayList<>(Arrays.asList(array));
+    }
+
+    public static Integer[] convertToIntegerArray(ArrayList<Integer> array){
+        return array.toArray(new Integer[array.size()]);
+    }
+
+    public static String getInClause(int size){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            sb.append("?");
+            if(i < size - 1){
+                sb.append(",");
+            }
+        }
+        return sb.toString();
     }
 }

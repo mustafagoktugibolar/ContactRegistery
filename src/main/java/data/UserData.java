@@ -1,9 +1,8 @@
 package data;
 
-import database.DBConnection;
 import interfaces.IUser;
 import models.*;
-import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserData extends User implements IUser {
@@ -11,9 +10,22 @@ public class UserData extends User implements IUser {
     private static final UserData USER_DATA = new UserData();
 
     public Address adress = new Address();
+
     public ProfilePicture profilePicture = new ProfilePicture();
     //first data structure
     public HashMap<Integer, Tournament> tournaments = new HashMap<>();
+
+    public ArrayList<Integer> team_ids = new ArrayList<>();
+
+    private UserData(){}
+
+    public ArrayList<Integer> getTeam_ids() {
+        return team_ids;
+    }
+
+    public void setTeam_ids(ArrayList<Integer> team_ids) {
+        this.team_ids = team_ids;
+    }
 
     public HashMap<Integer, Tournament> getTournaments() {
         return tournaments;
@@ -23,20 +35,6 @@ public class UserData extends User implements IUser {
         this.tournaments = tournaments;
     }
 
-    // database connection
-    private static Connection connection = DBConnection.getInstance();
-
-    private UserData(){
-
-    }
-
-    public static Connection getConnection() {
-        return connection;
-    }
-
-    public static void setConnection(Connection connection) {
-        UserData.connection = connection;
-    }
 
     public ProfilePicture getProfilePicture() {
         return profilePicture;
